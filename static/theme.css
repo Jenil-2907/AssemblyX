@@ -1,0 +1,43 @@
+@import url('https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400;1,700&display=swap');
+
+:root {
+  /* Brutalist Neo Palette */
+  --brutal-bg: #f4f4f4;
+  --brutal-black: #050505;
+  --brutal-green: #d4ff00;
+  --brutal-cyan: #06e1ff;
+  --brutal-pink: #ff66cc;
+  --brutal-gray-light: #e5e5e5;
+  --brutal-gray-dark: #666666;
+  
+  /* Typography */
+  --font-mono: 'Space Mono', Courier, monospace;
+  --font-sans: system-ui, -apple-system, sans-serif;
+
+  /* Structural Variables */
+  --border-thick: 4px solid var(--brutal-black);
+  --border-thin: 2px solid var(--brutal-black);
+  --shadow-massive: 8px 8px 0px var(--brutal-black);
+  --shadow-medium: 4px 4px 0px var(--brutal-black);
+}
+
+/* Global Utility Reset specifically for brutalist styles if adopted site-wide */
+.brutal-dot-bg {
+  background-color: var(--brutal-bg);
+  /* Create an SVG dot pattern or use radial gradient */
+  background-image: radial-gradient(var(--brutal-gray-light) 2px, transparent 2px);
+  background-size: 20px 20px;
+  color: var(--brutal-black);
+}
+
+.brutal-border {
+  border: var(--border-thick);
+}
+
+.brutal-shadow {
+  box-shadow: var(--shadow-massive);
+}
+
+.brutal-font {
+  font-family: var(--font-mono);
+}

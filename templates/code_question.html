@@ -3,73 +3,96 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Code Playground</title>
+  <title>Code Editor - ASM_ZINE</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='theme.css') }}" />
   <style>
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html, body { height: 100%; margin: 0; padding: 0; overflow: hidden; }
 
-    html, body {
-      height: 100%;
-      margin: 0;
-      padding: 0;
-      overflow: hidden;
-    }
-
-    body {
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    .brutal-editor-container {
       display: flex;
-      background-color: #0e0e1a;
-      color: #ffffff;
+      height: 100vh;
+      width: 100%;
     }
 
+    /* Left Panel: Instructions (White brutalist) */
     .left-panel {
       width: 40%;
       padding: 30px;
-      background-color: #1c1c2e;
-      border-right: 1px solid #2c2c3e;
+      background-color: #fff;
+      border-right: var(--border-thick);
       overflow-y: auto;
       height: 100vh;
+      box-shadow: inset -8px 0px 0px rgba(0,0,0,0.05);
     }
 
+    .question-title {
+      font-family: var(--font-mono);
+      font-size: 24px;
+      font-weight: 800;
+      margin-bottom: 20px;
+      text-transform: uppercase;
+      color: var(--brutal-black);
+      border-bottom: var(--border-thick);
+      padding-bottom: 10px;
+      display: inline-block;
+    }
+    
+    .question-title::before {
+      content: "TASK // ";
+      color: var(--brutal-pink);
+    }
+
+    .question-description {
+      font-size: 16px;
+      color: var(--brutal-gray-dark);
+      line-height: 1.6;
+      font-family: var(--font-sans);
+      margin-bottom: 20px;
+      font-weight: bold;
+    }
+
+    .solution-btn {
+      margin-top: 20px;
+      padding: 12px 18px;
+      background-color: var(--brutal-cyan);
+      color: var(--brutal-black);
+      border: var(--border-thick);
+      box-shadow: var(--shadow-medium);
+      cursor: pointer;
+      font-family: var(--font-mono);
+      font-weight: 800;
+      text-transform: uppercase;
+      transition: transform 0.1s, box-shadow 0.1s;
+    }
+
+    .solution-btn:active {
+      transform: translate(2px, 2px);
+      box-shadow: 2px 2px 0px var(--brutal-black);
+    }
+
+    #solution-box {
+      margin-top: 20px;
+      display: none;
+      background: var(--brutal-bg);
+      padding: 15px;
+      border: var(--border-thick);
+      box-shadow: var(--shadow-medium);
+      color: var(--brutal-black);
+      white-space: pre-wrap;
+      font-family: var(--font-mono);
+      font-weight: bold;
+      font-size: 14px;
+    }
+
+    /* Right Panel: Code Editor (Dark Terminal inside White Border) */
     .right-panel {
       width: 60%;
       padding: 30px;
       display: flex;
       flex-direction: column;
-      background-color: #0e0e1a;
-      height: 100vh;
-    }
-
-    .question-title {
-      font-size: 24px;
-      font-weight: bold;
-      margin-bottom: 12px;
-      color: #7c3aed;
-    }
-
-    .question-description {
-      font-size: 16px;
-      color: #ccc;
-      line-height: 1.6;
-      margin-bottom: 12px;
-    }
-
-    .solution-btn {
-      margin-top: 20px;
-      padding: 10px 14px;
-      background-color: #2e1065;
-      color: #c4b5fd;
-      border: none;
-      border-radius: 6px;
-      cursor: pointer;
-      font-weight: 600;
-    }
-
-    .solution-btn:hover {
-      background-color: #4c1d95;
+      background-color: var(--brutal-bg);
+      position: relative;
     }
 
     .code-editor {
@@ -77,120 +100,163 @@
       display: flex;
       flex-direction: column;
       min-height: 0;
+      border: var(--border-thick);
+      background: #000;
+      box-shadow: var(--shadow-massive);
+      padding-bottom: 2px;
     }
 
     .editor-header {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      margin-bottom: 10px;
+      background: #fff;
+      border-bottom: var(--border-thick);
+      padding: 10px 15px;
+    }
+    
+    .editor-header h3 {
+      font-family: var(--font-mono);
+      text-transform: uppercase;
+      font-size: 16px;
     }
 
     .architecture-select {
-      padding: 8px 12px;
-      background-color: #2e1065;
-      color: #c4b5fd;
-      border: 1px solid #4c1d95;
-      border-radius: 4px;
-      font-family: inherit;
+      padding: 6px 12px;
+      background-color: var(--brutal-cyan);
+      color: var(--brutal-black);
+      border: var(--border-thick);
+      font-family: var(--font-mono);
+      font-weight: bold;
       font-size: 14px;
+      cursor: pointer;
     }
 
     textarea {
       flex: 1;
       width: 100%;
-      background-color: #1c1c2e;
-      color: #ffffff;
-      border: 1px solid #2c2c3e;
-      padding: 12px;
-      font-family: monospace;
-      font-size: 14px;
-      border-radius: 8px;
+      background-color: #000;
+      color: #00ff00; /* Hacker Green text */
+      border: none;
+      padding: 20px;
+      font-family: 'Space Mono', Courier, monospace;
+      font-size: 16px;
       resize: none;
       min-height: 0;
+      outline: none;
+    }
+
+    .bottom-actions {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-top: 20px;
+    }
+
+    .back-btn {
+      display: inline-block;
+      font-family: var(--font-mono);
+      font-weight: bold;
+      padding: 10px 20px;
+      border: var(--border-thick);
+      text-decoration: none;
+      color: var(--brutal-black);
+      background: #fff;
+      box-shadow: var(--shadow-medium);
+    }
+    .back-btn:hover {
+      background: var(--brutal-pink);
     }
 
     .submit-btn {
-      margin-top: 16px;
-      align-self: flex-end;
-      padding: 10px 18px;
-      background-color: #7c3aed;
-      color: white;
-      border: none;
-      border-radius: 6px;
+      padding: 14px 24px;
+      background-color: var(--brutal-green);
+      color: var(--brutal-black);
+      border: var(--border-thick);
+      box-shadow: var(--shadow-medium);
       cursor: pointer;
-      font-weight: bold;
+      font-weight: 800;
+      font-size: 16px;
+      font-family: var(--font-mono);
+      transition: transform 0.1s, box-shadow 0.1s;
     }
 
-    .submit-btn:hover {
-      background-color: #6b21a8;
+    .submit-btn:active {
+      transform: translate(2px, 2px);
+      box-shadow: 2px 2px 0px var(--brutal-black);
     }
 
     .submit-btn:disabled {
-      background-color: #4c1d95;
+      background-color: var(--brutal-gray-light);
       cursor: not-allowed;
-    }
-
-    #solution-box {
-      margin-top: 12px;
-      display: none;
-      background: #1c1c2e;
-      padding: 12px;
-      border-radius: 8px;
-      border: 1px solid #2c2c3e;
-      color: #a3e635;
-      white-space: pre-wrap;
-      font-family: monospace;
     }
 
     .output-block {
       margin-top: 20px;
-      background: #1c1c2e;
-      padding: 12px;
-      border-radius: 8px;
-      border: 1px solid #2c2c3e;
+      background: #000;
+      padding: 15px;
+      border: var(--border-thick);
+      box-shadow: var(--shadow-medium);
+      color: #fff;
+    }
+    
+    .output-block h3 {
+      font-family: var(--font-mono);
+      color: var(--brutal-cyan);
+      margin-bottom: 10px;
+      font-size: 14px;
     }
 
     .output-block pre {
       white-space: pre-wrap;
-      font-family: monospace;
+      font-family: var(--font-mono);
+      font-size: 14px;
     }
-    .result-correct {
-  background-color: #14532d;
-  color: #4ade80;
-}
 
-.result-incorrect {
-  background-color: #7f1d1d;
-  color: #f87171;
-}
+    #result-indicator {
+      font-family: var(--font-mono);
+      font-size: 14px;
+      text-transform: uppercase;
+      border: var(--border-thick);
+      margin-top: 10px;
+      padding: 10px;
+      font-weight: 800;
+    }
   </style>
 </head>
-<body>
-  <div class="left-panel">
-    <div class="question-title" id="question-title">Loading question...</div>
-    <div class="question-description" id="question-description"></div>
-    <button class="solution-btn" id="solution-btn">👀 View Solution</button>
-    <pre id="solution-box"></pre>
-  </div>
+<body class="brutal-dot-bg">
 
-  <div class="right-panel">
-    <form class="code-editor">
-      <div class="editor-header">
-        <h3>Code Editor</h3>
-        <select class="architecture-select" name="architecture">
-          <option value="x86">x86 Assembly</option>
-          <option value="mips32">MIPS32 Assembly</option>
-          <option value="arm">ARM Assembly</option>
-        </select>
-      </div>
-      <textarea name="code" id="code-editor" spellcheck="false"></textarea>
-      <button type="submit" class="submit-btn">Submit</button>
-      <div class="output-block" style="display: none;">
-        <h3>Execution Output:</h3>
-        <pre id="output-content"></pre>
-      </div>
-    </form>
+  <div class="brutal-editor-container">
+    <div class="left-panel">
+      <div class="question-title" id="question-title">Loading...</div>
+      <div class="question-description" id="question-description"></div>
+      <button class="solution-btn" id="solution-btn">SHOW // SOLUTION</button>
+      <pre id="solution-box"></pre>
+    </div>
+
+    <div class="right-panel">
+      <form class="code-editor">
+        <div class="editor-header">
+          <h3>>_ TERMINAL</h3>
+          <select class="architecture-select" name="architecture">
+            <option value="x86">x86 Assembly</option>
+            <option value="mips32">MIPS32 Assembly</option>
+            <option value="arm">ARM Assembly</option>
+          </select>
+        </div>
+        <textarea name="code" id="code-editor" spellcheck="false"></textarea>
+        
+        <div class="bottom-actions">
+           <a href="{{ url_for('playground') }}" class="back-btn">← EXIT_TERMINAL</a>
+           <button type="submit" class="submit-btn">> EXECUTE</button>
+        </div>
+        
+        <div class="output-block" style="display: none;">
+          <h3>EXEC_OUTPUT:</h3>
+          <pre id="output-content"></pre>
+        </div>
+      </form>
+    </div>
   </div>
 
   <script>
@@ -216,7 +282,7 @@
         
       } catch (error) {
         console.error('Failed to load question:', error);
-        document.getElementById('question-title').textContent = 'Error loading question';
+        document.getElementById('question-title').textContent = 'ERR_LOAD';
         return;
       }
 
@@ -248,8 +314,12 @@
         const outputContent = document.getElementById('output-content');
         
         submitBtn.disabled = true;
-        submitBtn.textContent = 'Running...';
+        submitBtn.textContent = 'EXECUTING...';
         outputBlock.style.display = 'none';
+        
+        // Clear old result
+        const oldRes = document.getElementById('result-indicator');
+        if (oldRes) oldRes.remove();
         
         try {
           const response = await fetch('/run', {
@@ -291,27 +361,20 @@
             const isCorrect = actual === expected;
 
             // Create result indicator
-            let resultIndicator = document.getElementById('result-indicator');
-            if (!resultIndicator) {
-              resultIndicator = document.createElement('div');
-              resultIndicator.id = 'result-indicator';
-              resultIndicator.style.marginTop = '10px';
-              resultIndicator.style.padding = '10px';
-              resultIndicator.style.borderRadius = '6px';
-              resultIndicator.style.fontWeight = 'bold';
-              outputBlock.appendChild(resultIndicator);
-            }
-
+            let resultIndicator = document.createElement('div');
+            resultIndicator.id = 'result-indicator';
+            
             if (isCorrect) {
-              resultIndicator.textContent = '✓ Correct Answer!';
-              resultIndicator.style.backgroundColor = '#14532d';
-              resultIndicator.style.color = '#4ade80';
+              resultIndicator.textContent = '✓ SECURE_MATCH // CORRECT';
+              resultIndicator.style.backgroundColor = '#ccff00';
+              resultIndicator.style.color = '#000';
             } else {
-              resultIndicator.textContent = `✗ Incorrect Answer\nExpected: ${expected}`;
-              resultIndicator.style.backgroundColor = '#7f1d1d';
-              resultIndicator.style.color = '#f87171';
+              resultIndicator.textContent = `✗ MISMATCH\nEXPECTED: ${expected}`;
+              resultIndicator.style.backgroundColor = '#ff66cc';
+              resultIndicator.style.color = '#000';
               resultIndicator.style.whiteSpace = 'pre-wrap';
             }
+            outputBlock.appendChild(resultIndicator);
           }
           
         } catch (error) {
@@ -320,16 +383,15 @@
           outputBlock.style.display = 'block';
         } finally {
           submitBtn.disabled = false;
-          submitBtn.textContent = 'Submit';
+          submitBtn.textContent = '> EXECUTE';
         }
       });
 
-      // Architecture switcher - use question's boilerplate
+      // Architecture switcher
       document.querySelector('.architecture-select').addEventListener('change', function() {
         document.getElementById('code-editor').value = window.currentQuestion.boilerplate;
       });
     });
   </script>
-
 </body>
 </html>

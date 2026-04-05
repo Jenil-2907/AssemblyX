@@ -1,98 +1,102 @@
-/* Same styling as x86.html for consistency */
-* {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-}
+/* Base imports implicitly available from theme.css */
 
 body {
-  min-height: 100vh;
-  background: linear-gradient(135deg, #0f0f0f, #1e1e2f);
-  color: #fff;
-  padding: 40px;
-  backdrop-filter: blur(15px);
+    padding: 3rem;
+    max-width: 1000px;
+    margin: 0 auto;
 }
 
-/* Header */
 .header {
-  font-size: 32px;
-  font-weight: bold;
-  color: #7c3aed;
-  margin-bottom: 24px;
-  text-align: center;
-  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+    font-family: var(--font-mono);
+    font-size: 2.5rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    color: var(--brutal-black);
+    background: var(--brutal-pink); /* MIPS = pink */
+    display: inline-block;
+    padding: 10px 20px;
+    border: var(--border-thick);
+    box-shadow: var(--shadow-massive);
+    margin-bottom: 2rem;
 }
 
-/* Content styling */
 .subtext {
-  font-size: 16px;
-  line-height: 1.6;
-  margin-bottom: 20px;
-  color: #ddd;
-  max-width: 900px;
-  margin-left: auto;
-  margin-right: auto;
+    font-family: var(--font-sans);
+    font-size: 1.1rem;
+    line-height: 1.8;
+    color: var(--brutal-gray-dark);
+    font-weight: 600;
+    margin-bottom: 1.5rem;
+    background: #fff;
+    padding: 20px;
+    border: var(--border-thick);
+    box-shadow: 4px 4px 0px var(--brutal-black);
 }
 
 .subtext code {
-  background: rgba(255, 255, 255, 0.1);
-  padding: 2px 6px;
-  border-radius: 4px;
-  color: #a78bfa;
-  font-family: "Courier New", monospace;
+    font-family: var(--font-mono);
+    background: var(--brutal-black);
+    color: var(--brutal-green);
+    padding: 2px 6px;
+    font-weight: bold;
 }
 
-/* Table styling */
 table {
-  width: 100%;
-  max-width: 900px;
-  border-collapse: collapse;
-  margin: 30px auto;
-  background: rgba(255, 255, 255, 0.05);
-  border-radius: 12px;
-  overflow: hidden;
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+    width: 100%;
+    margin-top: 2rem;
+    border-collapse: collapse;
+    background: #fff;
+    border: var(--border-thick);
+    box-shadow: var(--shadow-massive);
+    margin-bottom: 3rem;
 }
 
-th,
-td {
-  padding: 15px;
-  text-align: left;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+thead th {
+    background: var(--brutal-black);
+    color: var(--brutal-pink); 
+    font-family: var(--font-mono);
+    text-transform: uppercase;
+    padding: 15px;
+    text-align: left;
+    border-bottom: var(--border-thick);
 }
 
-th {
-  background: rgba(124, 58, 237, 0.2);
-  color: #a78bfa;
-  font-weight: 600;
+tbody td {
+    padding: 12px 15px;
+    border-bottom: var(--border-thin);
+    font-family: var(--font-sans);
+    font-weight: 600;
+    color: var(--brutal-black);
 }
 
-tr:hover {
-  background: rgba(255, 255, 255, 0.03);
+tbody tr:last-child td {
+    border-bottom: none;
 }
 
-/* Link styling */
+tbody td code {
+    font-family: var(--font-mono);
+    background: var(--brutal-bg);
+    padding: 4px 8px;
+    border: 1px solid var(--brutal-black);
+    font-weight: bold;
+}
+
 .back-link-container {
-  text-align: center;
-  margin-top: 40px;
+    margin-top: 2rem;
 }
 
 .back-link {
-  display: inline-block;
-  padding: 12px 24px;
-  background-color: rgba(124, 58, 237, 0.2);
-  color: #a78bfa;
-  text-decoration: none;
-  font-weight: 600;
-  border-radius: 10px;
-  transition: all 0.3s ease;
-  border: 1px solid rgba(124, 58, 237, 0.3);
+    display: inline-block;
+    font-family: var(--font-mono);
+    font-weight: bold;
+    padding: 10px 20px;
+    border: var(--border-thick);
+    text-decoration: none;
+    color: #fff;
+    background: var(--brutal-black);
+    box-shadow: var(--shadow-medium);
 }
 
 .back-link:hover {
-  background-color: rgba(124, 58, 237, 0.3);
-  transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(124, 58, 237, 0.2);
+    color: var(--brutal-pink); 
 }

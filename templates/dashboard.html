@@ -5,13 +5,14 @@
   <meta charset="UTF-8">
   <title>AssemblyX Dashboard</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-  <link rel="stylesheet" href="{{ url_for('static', filename='/dashboard.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='theme.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='dashboard.css') }}">
 </head>
 
-<body>
+<body class="brutal-dot-bg">
   <div class="container">
     <div class="header">
-      <h1>AssemblyX Learning Platform</h1>
+      <h1>AssemblyX /_ MAIN</h1>
       <p>Master low-level programming with interactive tutorials and real-time coding for x86, MIPS, and ARM
         architectures.</p>
     </div>
@@ -35,19 +36,20 @@
         <p>Access tutorials, cheat sheets, and reference materials for all architectures.</p>
       </a>
     </div>
+
+    <footer>
+      <div class="footer-links">
+        <a href="#">About</a>
+        <a href="#">Contact</a>
+        <a href="#">Privacy Policy</a>
+        <a href="#">Terms of Service</a>
+      </div>
+      <div class="copyright">
+        &copy; 198X ASM_ZINE. ALL REGS RESERVED.
+      </div>
+    </footer>
   </div>
 
-  <footer>
-    <div class="footer-links">
-      <a href="#">About</a>
-      <a href="#">Contact</a>
-      <a href="#">Privacy Policy</a>
-      <a href="#">Terms of Service</a>
-    </div>
-    <div class="copyright">
-      &copy; 2023 AssemblyX. All rights reserved.
-    </div>
-  </footer>
 </body>
 
 </html>

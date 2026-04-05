@@ -3,27 +3,97 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Login - AssemblyX</title>
+  <title>Login - ASM_ZINE</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='theme.css') }}" />
   <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}" />
 </head>
-<body>
+<body class="brutal-dot-bg">
+
+  <!-- Background Decorative Metrics -->
+  <div class="bg-metrics">
+    <div class="bg-line top-binary">01101010 01111000 00</div>
+    <div class="bg-line mid-binary">1100000 00110100 0011</div>
+    <div class="bg-line bottom-binary">0000 000 000 001100</div>
+    
+    <div class="bg-asm-x">ASM X</div>
+    
+    <div class="bg-corner-text">
+      PUSH EBP<br>
+      MOV EBP, ESP<br>
+      SUB ESP, 8
+    </div>
+    
+    <div class="bg-copyright">© 198X ASSEMBLY_X PLATFORM // ALL REGS RESERVED</div>
+  </div>
+
+  <!-- Floating Decorative Badges -->
+  <div class="floating-badge badge-cyan">EAX: 0xDEADBEEF</div>
+  <div class="floating-badge badge-pink">ESP: 0x0012FF8C</div>
+
   <div class="login-container">
     <div class="login-box">
-      <h1>Welcome to <span>AssemblyX</span></h1>
+      <h1>ASM_ZINE</h1>
+      <div class="status-indicator">
+        <span class="status-dot"></span> SECURE_ACCESS_PROTOCOL_V.1.0
+      </div>
+
       {% if error %}
-        <p style="color: #f87171; text-align: center;">{{ error }}</p>
+        <p style="color: #ff3333; font-family: var(--font-mono); font-weight: bold; font-size: 0.8rem; margin-bottom: 10px;">ERR: {{ error }}</p>
       {% endif %}
+
       <form method="POST" action="/login">
-        <label for="username">Username</label>
-        <input type="text" name="username" placeholder="yourname123" required>
+        
+        <div class="input-group">
+          <label class="input-label" for="username">USER_ID</label>
+          <div class="input-wrapper">
+            <div class="input-icon">>_</div>
+            <input type="text" name="username" placeholder="ROOT_001" required>
+          </div>
+        </div>
 
-        <label for="password">Password</label>
-        <input type="password" name="password" placeholder="••••••••" required>
+        <div class="input-group">
+          <label class="input-label" for="password">AUTH_KEY</label>
+          <div class="input-wrapper">
+            <div class="input-icon">🗝️</div>
+            <input type="password" name="password" placeholder="********" required>
+          </div>
+        </div>
 
-        <button type="submit">Login</button>
+        <button type="submit">LOGIN</button>
       </form>
-      <p class="signup-text">Don't have an account? <a href="#">Sign up</a></p>
+
+      <div class="form-links">
+        <a href="#">FORGOT_PASS?</a>
+        <a href="#">REQUEST_ACCESS</a>
+      </div>
+
+      <!-- Overlapping Badge -->
+      <div class="sys-status-badge">SYS_STATUS: READY</div>
     </div>
+
+    <!-- Bottom Metrics Table -->
+    <table class="metrics-table">
+      <thead>
+        <tr>
+          <th>REG</th>
+          <th>VALUE</th>
+          <th>TYPE</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>IP_ADDR</td>
+          <td>127.0.0.1</td>
+          <td>LOCAL</td>
+        </tr>
+        <tr>
+          <td>BUILD</td>
+          <td>0x842A</td>
+          <td>STABLE</td>
+        </tr>
+      </tbody>
+    </table>
   </div>
+
 </body>
 </html>

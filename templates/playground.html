@@ -6,14 +6,17 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Code Playground</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-  <link rel="stylesheet" href="{{ url_for('static', filename='/playground.css') }}" />
+  <link rel="stylesheet" href="{{ url_for('static', filename='theme.css') }}" />
+  <link rel="stylesheet" href="{{ url_for('static', filename='playground.css') }}" />
 </head>
 
-<body>
+<body class="brutal-dot-bg">
   <div class="playground-wrapper">
+    <div class="floating-tag">TARGET_PRAC</div>
+
     <div class="playground-header">
-      <h1><i class="fas fa-code"></i> Code Playground</h1>
-      <p>Select a challenge to practice your assembly skills</p>
+      <h1>Code_Playground</h1>
+      <p>Select a challenge to practice your assembly skills.</p>
     </div>
 
     <div class="challenges-container">
@@ -21,33 +24,33 @@
         <h2>Beginner Challenges</h2>
         <ul class="challenge-list">
           <li>
-            <a href="{{ url_for('code_question', question_id='x86_hello') }}">
+            <a href="{{ url_for('code_question', question_id='x86_hello') }}" class="question-card" data-question-id="x86_hello">
               <span class="challenge-name">Hello World</span>
               <span class="challenge-arch">x86</span>
             </a>
           </li>
           <li>
-            <a href="{{ url_for('code_question', question_id='add') }}">
+            <a href="{{ url_for('code_question', question_id='add') }}" class="question-card" data-question-id="add">
               <span class="challenge-name">Basic Addition</span>
-              <span class="challenge-arch">Multi-arch</span>
+              <span class="challenge-arch">MULTI_ARCH</span>
             </a>
           </li>
           <li>
-            <a href="{{ url_for('code_question', question_id='sub') }}">
+            <a href="{{ url_for('code_question', question_id='sub') }}" class="question-card" data-question-id="sub">
               <span class="challenge-name">Basic Subtraction</span>
-              <span class="challenge-arch">Multi-arch</span>
+              <span class="challenge-arch">MULTI_ARCH</span>
             </a>
           </li>
           <li>
-            <a href="{{ url_for('code_question', question_id='mul') }}">
+            <a href="{{ url_for('code_question', question_id='mul') }}" class="question-card" data-question-id="mul">
               <span class="challenge-name">Basic Multiplication</span>
-              <span class="challenge-arch">Multi-arch</span>
+              <span class="challenge-arch">MULTI_ARCH</span>
             </a>
           </li>
           <li>
-            <a href="{{ url_for('code_question', question_id='div') }}">
+            <a href="{{ url_for('code_question', question_id='div') }}" class="question-card" data-question-id="div">
               <span class="challenge-name">Basic Division</span>
-              <span class="challenge-arch">Multi-arch</span>
+              <span class="challenge-arch">MULTI_ARCH</span>
             </a>
           </li>
         </ul>
@@ -56,13 +59,10 @@
 
     <div class="back-btn-container">
       <a href="{{ url_for('dashboard') }}" class="back-btn">
-        <i class="fas fa-arrow-left"></i> Back to Dashboard
+        <i class="fas fa-arrow-left"></i> RET.DASHBOARD
       </a>
     </div>
   </div>
-</body>
-
-</html>
 
 <script>
   document.addEventListener('DOMContentLoaded', () => {
@@ -71,14 +71,11 @@
         const questionId = card.dataset.questionId;
         sessionStorage.setItem('currentQuestion', JSON.stringify({
           id: questionId,
-          title: card.textContent.trim()
+          title: card.querySelector('.challenge-name').textContent.trim()
         }));
-        window.location.href = `/question/${questionId}`;
       });
     });
   });
 </script>
-<script src=""></script>
 </body>
-
 </html>

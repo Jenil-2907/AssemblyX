@@ -1,7 +1,19 @@
-from flask import Flask, render_template, request, redirect, url_for, jsonify
+from flask import Flask, render_template, request, redirect, url_for, jsonify, session
 import requests
+import os
+from functools import wraps
 
 app = Flask(__name__)
+
+app.secret_key = os.environ.get('SECRET_KEY', os.urandom(24))
+
+def login_required(f):
+    @wraps(f)
+    def decorated_function(*args, **kwargs):
+        if 'user' not in session:
+            return redirect(url_for('login'))
+        return f(*args, **kwargs)
+    return decorated_function
 
 # Dummy user credentials
 users = {
@@ -72,46 +84,64 @@ solutions = {
 
 @app.route('/', methods=['GET'])
 def home():
+    if 'user' in session:
+        return redirect(url_for('dashboard'))
     return redirect(url_for('login'))
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
+    if 'user' in session:
+        return redirect(url_for('dashboard'))
+
     if request.method == 'POST':
         username = request.form.get('username')
         password = request.form.get('password')
 
         if username in users and users[username] == password:
+            session['user'] = username
             return redirect(url_for('dashboard'))
 
         return render_template('login.html', error="Invalid credentials")
     
     return render_template('login.html', error=None)
 
+@app.route('/logout')
+def logout():
+    session.pop('user', None)
+    return redirect(url_for('login'))
+
 @app.route('/dashboard')
+@login_required
 def dashboard():
     return render_template('dashboard.html')
 
 @app.route('/x86')
+@login_required
 def x86():
     return render_template('x86.html')
 
 @app.route('/mips')
+@login_required
 def mips():
     return render_template('mips.html')
 
 @app.route('/arm')
+@login_required
 def arm():
     return render_template('arm.html')
 
 @app.route('/playground')
+@login_required
 def playground():
     return render_template('playground.html')
 
 @app.route('/architectures')
+@login_required
 def architectures():
     return render_template('architectures.html')
 
 @app.route('/question/<question_id>', methods=['GET'])
+@login_required
 def code_question(question_id):
     # Just render the basic template - data will be loaded via JS
     return render_template('code_question.html')
@@ -162,6 +192,7 @@ def api_question(question_id):
     })
 
 @app.route('/resources')
+@login_required
 def resources():
     return render_template('resources.html')
 
