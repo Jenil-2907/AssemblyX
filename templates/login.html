@@ -1,12 +1,14 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Login - ASM_ZINE</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Login - ASSEMBLY_X</title>
   <link rel="stylesheet" href="{{ url_for('static', filename='theme.css') }}" />
   <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}" />
 </head>
+
 <body class="brutal-dot-bg">
 
   <!-- Background Decorative Metrics -->
@@ -14,15 +16,15 @@
     <div class="bg-line top-binary">01101010 01111000 00</div>
     <div class="bg-line mid-binary">1100000 00110100 0011</div>
     <div class="bg-line bottom-binary">0000 000 000 001100</div>
-    
+
     <div class="bg-asm-x">ASM X</div>
-    
+
     <div class="bg-corner-text">
       PUSH EBP<br>
       MOV EBP, ESP<br>
       SUB ESP, 8
     </div>
-    
+
     <div class="bg-copyright">© 198X ASSEMBLY_X PLATFORM // ALL REGS RESERVED</div>
   </div>
 
@@ -38,11 +40,13 @@
       </div>
 
       {% if error %}
-        <p style="color: #ff3333; font-family: var(--font-mono); font-weight: bold; font-size: 0.8rem; margin-bottom: 10px;">ERR: {{ error }}</p>
+      <p
+        style="color: #ff3333; font-family: var(--font-mono); font-weight: bold; font-size: 0.8rem; margin-bottom: 10px;">
+        ERR: {{ error }}</p>
       {% endif %}
 
       <form method="POST" action="/login">
-        
+
         <div class="input-group">
           <label class="input-label" for="username">USER_ID</label>
           <div class="input-wrapper">
@@ -96,4 +100,5 @@
   </div>
 
 </body>
+
 </html>
