@@ -17,6 +17,50 @@
 > More Help available in README of cloud_backned
 > [Link to Backend README](./cloud%20backend/README.md)
 
+---
+
+## 💻 Using the Custom API
+
+If you want to call the custom cloud API (`https://cloud-backend-gp5j.onrender.com/execute`) from your own project, make a `POST` request with the `code` and `architecture` in the JSON body.
+
+### cURL
+```bash
+curl -X POST https://cloud-backend-gp5j.onrender.com/execute \
+     -H "Content-Type: application/json" \
+     -d '{"code": "mov eax, 1\nmov ebx, 0\nint 0x80", "architecture": "x86"}'
+```
+
+### Python (requests)
+```python
+import requests
+
+url = "https://cloud-backend-gp5j.onrender.com/execute"
+payload = {
+    "code": "section .text\n    global _start\n_start:\n    mov eax, 1\n    mov ebx, 0\n    int 0x80",
+    "architecture": "x86" # Options: "x86", "arm", "mips"
+}
+
+response = requests.post(url, json=payload)
+print(response.json().get('output'))
+```
+
+### JavaScript (fetch)
+```javascript
+const runCode = async () => {
+  const url = "https://cloud-backend-gp5j.onrender.com/execute";
+  const response = await fetch(url, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      code: "mov eax, 1\nmov ebx, 0\nint 0x80",
+      architecture: "x86" // Options: "x86", "arm", "mips"
+    })
+  });
+  const data = await response.json();
+  console.log("Output:", data.output);
+};
+runCode();
+```
 
 ---
 
