@@ -23,11 +23,26 @@
 
 If you want to call the custom cloud API (`https://cloud-backend-gp5j.onrender.com/execute`) from your own project, make a `POST` request with the `code` and `architecture` in the JSON body.
 
-### cURL
+### cURL (Linux / macOS / Git Bash)
 ```bash
 curl -X POST https://cloud-backend-gp5j.onrender.com/execute \
      -H "Content-Type: application/json" \
      -d '{"code": "mov eax, 1\nmov ebx, 0\nint 0x80", "architecture": "x86"}'
+```
+
+### PowerShell (Windows)
+```powershell
+Invoke-RestMethod -Uri "https://cloud-backend-gp5j.onrender.com/execute" `
+    -Method Post `
+    -Headers @{"Content-Type"="application/json"} `
+    -Body '{"code": "mov eax, 1\nmov ebx, 0\nint 0x80", "architecture": "x86"}'
+```
+
+### Command Prompt (Windows)
+```cmd
+curl.exe -X POST https://cloud-backend-gp5j.onrender.com/execute ^
+     -H "Content-Type: application/json" ^
+     -d "{\"code\": \"mov eax, 1\\nmov ebx, 0\\nint 0x80\", \"architecture\": \"x86\"}"
 ```
 
 ### Python (requests)
